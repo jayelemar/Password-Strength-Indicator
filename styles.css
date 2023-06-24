@@ -15,6 +15,7 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	/* outline: 1px solid red; */
 }
 
 html {
@@ -38,4 +39,91 @@ img {
 	max-width: 900px;
 	margin: 0 auto;
 	padding: 0 20px;
+}
+
+/* Start Here */
+.main {
+	height: 100vh;
+	width: 100%;
+	background-color: var(--grey);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.box {
+	background-color: var(--white);
+	border-radius: 5px;
+	box-shadow: 0 2px 12px rgba(0, 0, 0, .3);
+	width: 40rem;
+}
+
+form {
+	padding: 2rem;
+}
+
+form > * {
+	margin: 1rem 2rem;
+}
+
+form h2 {
+	font-size: 2.5rem;
+	text-align: center;
+}
+
+
+.form-control label {
+	display: block;
+	margin-bottom: .2rem;
+	color: #777;
+}
+
+.form-control input {
+	display: block;
+	width: 100%;
+	border: 2px solid var(--grey);
+	border-radius: 3px;
+	padding: 1rem;
+	font-size: 1.4rem;
+	/* transition: all .1s ease; */
+}
+
+.form-control input:focus {
+	border-color: lightblue;
+	outline-color: lightblue;
+}
+
+.form-control.success input {
+	border-color: green;
+	outline-color: green;
+}
+
+.form-control.error input {
+	border-color: red;
+	outline-color: red;
+}
+
+.form-control small {
+	display: block;
+	color: red;
+	position: relative;
+	top: .1rem;
+	visibility: hidden;
+}
+
+.form-control.error small {
+	visibility: visible;
+}
+
+form button {
+	width: 100%;
+	background-color: var(--color-sec);
+	color: var(--white);
+	border: none;
+	outline: none;
+	padding: .8rem 0;
+	border-radius: 3px;
+	font-size: 1.6rem;
+	margin-top: 5rem;
+	cursor: pointer;
 }
