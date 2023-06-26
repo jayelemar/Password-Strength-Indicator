@@ -1,77 +1,108 @@
-const form = document.getElementById("form"),
-    username = document.getElementById("username"),
-    email = document.getElementById("email"),
+let state,
     password = document.getElementById("password"),
-    password2 = document.getElementById("password2");
+    passwordStrength = document.getElementById("password-strength"),
+    lowUpperCase = document.querySelector(".low-upper-case i"),
+    number = document.querySelector(".number i"),
+    specialChar = document.querySelector(".special-char i"),
+    eightChar = document.querySelector(".eigth-char i"),
+    showPassword = document.querySelector(".show-pass"),
+    eyeIcon = document.querySelector("#eye");
+    btn = document.querySelector("button");
 
-    // Form Event Listener
-form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    checkRequired([username, email, password, password2]);
-    checkLength(username, 6, 16);
-    checkLength(password, 6, 16);
-    checkEmail(email);
-    matchPassword(password, password2);
+// Show Password 
+showPassword.addEventListener('click', toggle);
+eyeIcon.addEventListener('click', toggleEye);
+password.addEventListener('keyup', () => {
+    let pass = password.value;
+    checkStrength(pass);
 });
 
-// Check Required Fields
-function checkRequired(inputAll) {
-    inputAll.forEach( (input) =>{
-        if(input.value.trim() === ""){
-            showError(input, `${getFieldName(input)} is required`);
-        } else {
-            showSuccess(input);
-        }
-    })
-};
-
-//Check Input Length 
-function checkLength(input, min, max) {
-    if(input.value.length < min ){
-        showError(input, `${getFieldName(input)} is must be atleast ${min} characters.`);
-    } else if(input.value.length > max ) {
-        showError(input, `${getFieldName(input)} is must be less than ${max} characters.`);
+// Toggle Password Visibility
+function toggle() {
+    if(state) {
+        password.setAttribute("type", "password");
+        state = false;
     } else {
-        showSuccess(input);
+        password.setAttribute("type", "text");
+        state = true;
     }
 }
 
-// Validate Email
-function checkEmail(input){
-    const re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    // const re = /^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$/;
-    if(re.test(input.value.trim())) {
-        showSuccess(input);
+// Toggle Eye Icon
+function toggleEye() {
+        eyeIcon.classList.toggle("fa-eye-slash");
+}
+
+// Check Password Strength
+function checkStrength(password) {
+    let strength = 0;
+
+    // Check Lower & uppercase
+    if(password.match(/([a-z].*[A-Z])|([A-z].*[a-z])/)) {
+        strength += 1;
+        // lowUpperCase.classList.remove("fa-circle");
+        // lowUpperCase.classList.add("fa-check");
+        addCheck(lowUpperCase);
     } else {
-        showError(input, "Email is not Valid")
+        // lowUpperCase.classList.remove("fa-check");
+        // lowUpperCase.classList.add("fa-circle");
+        addCircle(lowUpperCase);
+    }
+
+    // Check if there is numbers
+    if(password.match(/([0-9])/) ) {
+        strength += 1;
+        addCheck(number);
+    } else {
+        addCircle(number);
+    }
+
+    // Check for Special Char 
+    if(password.match(/([!,%,&,@,#,*,?,_,~])/) ){
+        strength += 1;
+        addCheck(specialChar);
+    } else {
+        addCircle(specialChar);
+    }
+
+    // Check if password is > 7
+    if(password.length >= 8){
+        strength += 1;
+        addCheck(eightChar);
+    } else {
+        addCircle(eightChar);
+    }
+
+    // update progress bar
+    if(strength == 1){
+        passwordStrength.classList.remove("pb-danger", "pb-warning", "pb-primary", "pb-success");
+        passwordStrength.classList.add("pb-danger");
+        btn.disabled = true;
+    } else if (strength == 2){
+        passwordStrength.classList.remove("pb-danger", "pb-warning", "pb-primary", "pb-success");
+        passwordStrength.classList.add("pb-warning");
+        btn.disabled = true;
+    } else if (strength == 3){
+        passwordStrength.classList.remove("pb-danger", "pb-warning", "pb-primary", "pb-success");
+        passwordStrength.classList.add("pb-primary");
+        btn.disabled = true;
+    } else if(strength == 4){
+        passwordStrength.classList.remove("pb-danger", "pb-warning", "pb-primary", "pb-success");
+        passwordStrength.classList.add("pb-success");
+        btn.removeAttribute("disabled");
     }
 }
 
-// Check Password
-function matchPassword(input1, input2){
-    if(input1.value !== input2.value){
-        showError(Input2, "Password do not match");
-    }
+// Add Check Icon
+function addCheck(charRequired){
+    charRequired.classList.remove("fa-circle");
+    charRequired.classList.add("fa-check");
 }
 
-
-// Show Error Message
-function showError(input, message) {
-    const formControl = input.parentElement;
-    formControl.className = "form-control error";
-    const small = formControl.querySelector("small");
-    small.innerText = message;
+// Remove Check & Add Circle Icon
+function addCircle(charRequired){
+    charRequired.classList.remove("fa-check");
+    charRequired.classList.add("fa-circle");
 }
 
-// Show Success Message 
-function showSuccess(input) {
-    const formControl = input.parentElement;
-    formControl.className = "form-control success";
-}
-
-// Get Field Name
-function getFieldName(input) {
-    return input.id.charAt(0).toUpperCase() + input.id.slice(1);
-}
 

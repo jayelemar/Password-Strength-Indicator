@@ -129,6 +129,7 @@ form button {
 	font-size: 1.6rem;
 	margin-top: 5rem;
 	cursor: pointer;
+	transition: all .5s ease;
 }
 
 /* Password Strength CSS */
@@ -163,21 +164,29 @@ form button {
 	list-style-type: none;
 }
 
+
+
 .pb-danger { 
 /* pb-danger = progress-bar-danger */
 	background-color: red;
+	width: 25%;
 }
 .pb-warning { 
 /* pb-danger = progress-bar-warning */
 	background-color: yellow;
+	width: 50%;
+
 }
 .pb-primary { 
 /* pb-danger = progress-bar-primary */
 	background-color: var(--color-primary);
+	width: 75%;
+
 }
 .pb-success { 
 /* pb-danger = progress-bar-success */
 	background-color: green;
+	width: 100%;
 }
 
 .fa-circle {
@@ -186,4 +195,9 @@ form button {
 
 .fa-check {
 	color: #02B502;
+}
+
+button[disabled] {
+	background-color: #777;
+	cursor: default;
 }
