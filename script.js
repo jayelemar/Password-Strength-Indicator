@@ -75,19 +75,16 @@ function checkStrength(password) {
 
     // update progress bar
     if(strength == 1){
-        passwordStrength.classList.remove("pb-danger", "pb-warning", "pb-primary", "pb-success");
+        removePassStrength();
         passwordStrength.classList.add("pb-danger");
-        btn.disabled = true;
     } else if (strength == 2){
-        passwordStrength.classList.remove("pb-danger", "pb-warning", "pb-primary", "pb-success");
+        removePassStrength();
         passwordStrength.classList.add("pb-warning");
-        btn.disabled = true;
     } else if (strength == 3){
-        passwordStrength.classList.remove("pb-danger", "pb-warning", "pb-primary", "pb-success");
+        removePassStrength();
         passwordStrength.classList.add("pb-primary");
-        btn.disabled = true;
     } else if(strength == 4){
-        passwordStrength.classList.remove("pb-danger", "pb-warning", "pb-primary", "pb-success");
+        removePassStrength();
         passwordStrength.classList.add("pb-success");
         btn.removeAttribute("disabled");
     }
@@ -103,6 +100,12 @@ function addCheck(charRequired){
 function addCircle(charRequired){
     charRequired.classList.remove("fa-check");
     charRequired.classList.add("fa-circle");
+}
+
+// Remove Password Strength
+function removePassStrength(){
+    passwordStrength.classList.remove("pb-danger", "pb-warning", "pb-primary", "pb-success");
+    btn.disabled = true;
 }
 
 

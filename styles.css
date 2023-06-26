@@ -134,9 +134,12 @@ form button {
 
 /* Password Strength CSS */
 
+.form-control {
+	position: relative;
+}
 .show-pass {
 	position: absolute;
-	top: 19%;
+	top: 12%;
 	right: 5%;
 	cursor: pointer;
 }
